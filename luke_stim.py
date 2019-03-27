@@ -112,6 +112,7 @@ def stim_builder(stimuli, imaging_rate, num_blocks, approx_exp_dur,
     metaDict['actual_exp_dur (min) (calc)'] = (times[-1] + inter_block_dur * 1e3) / 1000 / 60
 
     f = open(os.path.join(exp_dir,'meta.txt'),'w')
+    print(exp_dir)
     for k, v in metaDict.items():
         f.write(str(k) + ' >>> '+ str(v) + '\n\n')
 
