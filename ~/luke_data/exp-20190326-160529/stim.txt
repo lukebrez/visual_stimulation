@@ -1,0 +1,56 @@
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'RotatingBars', 'angle': 90}
+{'name': 'Grey'}
+{'name': 'Grey'}
