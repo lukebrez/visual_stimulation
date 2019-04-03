@@ -25,8 +25,8 @@ def main():
     s = (w/2) / sqrt(2)
     eye_correction = 0 #10e-3
 
-    right_screen = Screen(width=w, height=h, rotation=+pi/4, offset=(+s+eye_correction, -d + s, -h / 2), id=1, fullscreen=True, vsync=None, square_side=5e-2, square_loc='lr')
-    left_screen = Screen(width=w, height=h, rotation=-pi/4, offset=(-s-eye_correction, -d + s, -h / 2), id=2, fullscreen=True, vsync=None, square_side=5e-2, square_loc='ll')
+    right_screen = Screen(width=w, height=h, rotation=+pi/4, offset=(+s+eye_correction, -d + s, -h / 2), id=1, fullscreen=True, vsync=None, square_side=4e-2, square_loc='lr')
+    left_screen = Screen(width=w, height=h, rotation=-pi/4, offset=(-s-eye_correction, -d + s, -h / 2), id=2, fullscreen=True, vsync=None, square_side=4e-2, square_loc='ll')
 
     screens = [right_screen,left_screen]
     manager = launch_stim_server(screens)
@@ -47,20 +47,21 @@ def main():
     #           {'kwargs': MovingSquareMap_kwargs, 'duration': duration_map},
     #           {'kwargs': loom_kwargs, 'duration': duration_loom}]
 
-    master_dur = 20e3
+    master_dur = 1e3
     master_per = 20
-    master_rate = 1
-    stimuli = [{'kwargs': {'name': 'SineGrating', 'angle': 0, 'period': master_per, 'rate': master_rate},'duration': master_dur},
-               {'kwargs': {'name': 'SineGrating', 'angle': 90, 'period': master_per, 'rate': master_rate},'duration': master_dur},
-               {'kwargs': {'name': 'SineGrating', 'angle': 180, 'period': master_per, 'rate': master_rate},'duration': master_dur},
-               {'kwargs': {'name': 'SineGrating', 'angle': 270, 'period': master_per, 'rate': master_rate},'duration': master_dur}]
+    master_rate = 20
+    master_color = 1
+    stimuli = [{'kwargs': {'name': 'SineGrating', 'angle': 0, 'period': master_per, 'rate': master_rate, 'color': master_color},'duration': master_dur},
+               {'kwargs': {'name': 'SineGrating', 'angle': 90, 'period': master_per, 'rate': master_rate,  'color': master_color},'duration': master_dur},
+               {'kwargs': {'name': 'SineGrating', 'angle': 180, 'period': master_per, 'rate': master_rate,  'color': master_color},'duration': master_dur},
+               {'kwargs': {'name': 'SineGrating', 'angle': 270, 'period': master_per, 'rate': master_rate,  'color': master_color},'duration': master_dur}]
     
     #get experiment stimuli sequence and durations
     stims, dur = stim_builder(stimuli,
-                              imaging_rate = 2.145, #in Hz
-                              num_blocks = 5,
+                              imaging_rate = 2.496, #in Hz
+                              num_blocks = 4,
                               approx_exp_dur = 30, #in minutes
-                              inter_block_dur = 2, #in sec
+                              inter_block_dur = 180, #in sec
                               post_stim_dur = 2e3, #in ms
                               inter_stim_id = {'name': 'Grey'},
                               path = '/home/clandininlab/luke_data')

@@ -16,7 +16,12 @@ def stim_builder(stimuli, imaging_rate, num_blocks, approx_exp_dur,
     all_grey_stim_dur = len(stimuli) * post_stim_dur #total time of grey for one stim cycle
     all_inter_block_grey_dur = (num_blocks + 1) * inter_block_dur #total time of grey between blocks
 
-    block_dur = (approx_exp_dur * 60 - all_inter_block_grey_dur / 1e3) / num_blocks #duration of one block
+    block_dur = (approx_exp_dur * 60 - all_inter_block_grey_dur) / num_blocks #duration of one block
+
+    #1800 - 
+
+    print('interblockdur {}'.format(inter_block_dur))
+    print('block dur: {}'.format(block_dur))
 
     #how many times each stim can be displayed in a block
     num_cycles = int(np.floor(block_dur / (all_stim_dur / 1e3 + all_grey_stim_dur / 1e3)))
