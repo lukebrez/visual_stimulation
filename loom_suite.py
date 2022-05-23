@@ -12,7 +12,7 @@ import time
 import os
 from random import sample
 
-use_bruker_server = False
+use_bruker_server = True
 
 if use_bruker_server:
 	host = '171.65.17.246'
