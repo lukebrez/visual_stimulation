@@ -47,12 +47,21 @@ manager.load_stim(name='ConstantBackground', color=[1, 1, 1, 1], side_length=100
 manager.start_stim()
 sleep(2)
 
+'''issues:
+ - wrong shape
+ - grey end screen
+ - loom un-looms (whhaaaaaa????)
+'''
+
 loom_trajectory = {'name': 'Loom',
-                   'rv_ratio': 10,
-                   'stim_time': 4,
-                   'start_size': 0,
-                   'end_size': 100}
+                   'rv_ratio': .04,
+                   'stim_time': .5,
+                   'start_size': 40,
+                   'end_size': 50} #78
 #https://github.com/ClandininLab/flystim/blob/442c97b01c6c8f472a7e80110b678d2a326e0442/flystim/trajectory.py#L26
+
+#moving spot calls make_as_trajectory on radius
+
 manager.load_stim(name='MovingSpot', radius=loom_trajectory, sphere_radius=1, color=0, theta=0, phi=0, hold=True)
 
 manager.start_stim()
