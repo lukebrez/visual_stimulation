@@ -12,7 +12,7 @@ import time
 import os
 from random import sample
 
-use_bruker_server = True
+use_bruker_server = False
 
 if use_bruker_server:
 	host = '171.65.17.246'
@@ -77,10 +77,10 @@ manager.set_idle_background(0.5)
 manager.load_stim(name='ConstantBackground', color=[0.5, 0.5, 0.5, 1.0], side_length=100)
 
 loom_trajectory = {'name': 'Loom',
-                   'rv_ratio': 0.08,
-                   'stim_time': 4,
-                   'start_size': 3,
-                   'end_size': 90}
+                   'rv_ratio': 0.02,
+                   'stim_time': .75,
+                   'start_size': 0,
+                   'end_size': 180}
 
 # loom_trajectory = {'name': 'Loom',
 #                    'rv_ratio': 0.08,
@@ -95,10 +95,10 @@ color_trajectory = {'name': 'Sinusoid',
 
 manager.load_stim(name='MovingSpot', radius=loom_trajectory, sphere_radius=1, color=0, theta=0, phi=0, hold=True)
 
-sleep(1)
+sleep(2)
 
 manager.start_stim()
-sleep(4)
+sleep(4) #.75
 
 manager.stop_stim(print_profile=True)
 sleep(1)
