@@ -12,7 +12,7 @@ import time
 import os
 from random import sample
 
-use_bruker_server = False
+use_bruker_server = True
 
 if use_bruker_server:
     host = '171.65.17.246'
@@ -37,7 +37,7 @@ offsets = []
 rotation_0 = {'name': 'RotatingGrating', 'angle': 0, 'period': period, 'rate': rate, 'color': 1, 'hold_duration': .5, 'phi': -45, 'offset': 180}
 rotation_180 = {'name': 'RotatingGrating', 'angle': 180, 'period': period, 'rate': rate, 'color': 1, 'hold_duration': .5,'phi': -45, 'offset': 0}
 long_grey = {'name': 'ConstantBackground'}
-long_grey_dur = 1#60
+long_grey_dur = 60
 
 loom_trajectory = {'name': 'Loom', 'rv_ratio': 0.02, 'stim_time': .75, 'start_size': 0, 'end_size': 180}
 loom_stim = {'name': 'MovingSpot', 'radius': loom_trajectory, 'sphere_radius': 1, 'color': 0, 'theta': 0, 'phi': 0}
@@ -59,35 +59,52 @@ epoch_cluster_duration *= 60 # now in sec
 epoch_duration = post_time + stim_time
 # given the duration of a single epoch and a cluster of epochs, how many epochs to present?
 num_epochs_in_cluster = int(epoch_cluster_duration / epoch_duration)
+
+def make_epoch_cluster(num_single_stim_type, loom):
+    epoch_cluster_list = []
+    for i in range(num_single_stim_type):
+        ### adding translation key. will remove below before passing to flystim
+        stim = rotation_0.copy()
+        stim['Translation']=False
+        epoch_cluster_list.append(stim)
+
+        stim = rotation_180.copy()
+        stim['Translation']=False
+        epoch_cluster_list.append(stim)
+
+        stim = rotation_0.copy()
+        stim['Translation']=True
+        epoch_cluster_list.append(stim)
+
+        if loom:
+            stim = loom_stim.copy()
+            stim['Translation']=False
+            epoch_cluster_list.append(stim)
+
+    ### Shuffle phase to avoid spatial clustering in optic lobes
+    phase_offsets = list(np.arange(0,360,20)) # sample every 20 degrees
+    for i in range(len(epoch_cluster_list)):
+        if epoch_cluster_list[i]['name'] == 'RotatingGrating':
+            random_offset = int(sample(phase_offsets,1)[0]) # add random offset
+            epoch_cluster_list[i]['offset'] += random_offset
+
+    random.shuffle(epoch_cluster_list)
+    return epoch_cluster_list
+
 num_single_stim_type = int(num_epochs_in_cluster/4) # divide by 4 because we have left and right movement, and translation, and loom
+epoch_cluster_list_loom = make_epoch_cluster(num_single_stim_type, loom=True)
+num_single_stim_type = int(num_epochs_in_cluster/3)
+epoch_cluster_list_no_loom = make_epoch_cluster(num_single_stim_type, loom=False)
 
-epoch_cluster_list = []
-for i in range(num_single_stim_type):
-    ### adding translation key. will remove below before passing to flystim
-    stim = rotation_0.copy()
-    stim['Translation']=False
-    epoch_cluster_list.append(stim)
+#######################################################
+### CONCATENATE EPOCH CLUSTERS BETWEEN GREY PERIODS ###
+#######################################################
 
-    stim = rotation_180.copy()
-    stim['Translation']=False
-    epoch_cluster_list.append(stim)
+epoch_cluster_list_loom.insert(0,long_grey)
+epoch_cluster_list_no_loom.insert(0,long_grey)
 
-    stim = rotation_0.copy()
-    stim['Translation']=True
-    epoch_cluster_list.append(stim)
-
-    stim = loom_stim.copy()
-    stim['Translation']=False
-    epoch_cluster_list.append(stim)
-
-random.shuffle(epoch_cluster_list)
-
-### Shuffle phase to avoid spatial clustering in optic lobes
-phase_offsets = list(np.arange(0,360,20)) # sample every 20 degrees
-for i in range(len(epoch_cluster_list)):
-    if epoch_cluster_list[i]['name'] == 'RotatingGrating':
-        random_offset = int(sample(phase_offsets,1)[0]) # add random offset
-        epoch_cluster_list[i]['offset'] += random_offset
+epoch_cluster_list = epoch_cluster_list_no_loom + epoch_cluster_list_loom + epoch_cluster_list_no_loom + epoch_cluster_list_loom
+epoch_cluster_list.append(long_grey)
 
 ##################
 ### Save order ###
@@ -98,11 +115,13 @@ angles = []
 offsets = []
 translation = []
 names = []
+sphere_radius = []
 for stim in epoch_cluster_list:
     angles.append(stim.get('angle', np.nan))
     offsets.append(stim.get('offset', np.nan))
     translation.append(stim.get('Translation', np.nan))
-    names.append(stim.get('name'))
+    sphere_radius.append(stim.get('sphere_radius', np.nan))
+    #names.append(stim.get('name'))
 
 ### save to hdf5
 save_file = os.path.join('.', time.strftime("%Y%m%d-%H%M%S") + '.hdf5')
@@ -111,15 +130,10 @@ with h5py.File(save_file,'w') as h5:
     h5.create_dataset("angle", data=np.asarray(angles))
     h5.create_dataset("offset", data=np.asarray(offsets))
     h5.create_dataset("translation", data=np.asarray(translation))
-    h5.create_dataset("name", data=names)
+    h5.create_dataset("sphere_radius", data=np.asarray(sphere_radius))
+    #h5.create_dataset("name", data=names)
 
-#######################################################
-### CONCATENATE EPOCH CLUSTERS BETWEEN GREY PERIODS ###
-#######################################################
 
-epoch_cluster_list.insert(0,long_grey)
-epoch_cluster_list = epoch_cluster_list + epoch_cluster_list + epoch_cluster_list + epoch_cluster_list
-epoch_cluster_list.append(long_grey)
 
 ######################
 ### Trigger Bruker ###
