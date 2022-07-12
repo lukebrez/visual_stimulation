@@ -40,7 +40,7 @@ long_grey = {'name': 'ConstantBackground'}
 long_grey_dur = 60
 
 loom_trajectory = {'name': 'Loom', 'rv_ratio': 0.02, 'stim_time': .75, 'start_size': 0, 'end_size': 180}
-loom_stim = {'name': 'MovingSpot', 'radius': loom_trajectory, 'sphere_radius': 1, 'color': 0, 'theta': 0, 'phi': 0}
+loom_stim = {'name': 'MovingSpot', 'radius': loom_trajectory, 'sphere_radius': 1, 'color': 0, 'theta': 0, 'phi': -25}
 
 #################
 ### SET THESE ###
